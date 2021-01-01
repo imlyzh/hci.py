@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "hci.py"
+version = "0.1.0"
+description = "The Higher container interface for Python"
+authors = ["Zhihang-Liu <enterindex@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[tool.poetry.dev-dependencies]
+mypy = "^0.790"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
