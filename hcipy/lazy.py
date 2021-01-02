@@ -21,3 +21,5 @@ class Lazy(Generic[T]):
             return callable(self())
         return Lazy(r)
 # '''
+
+del T

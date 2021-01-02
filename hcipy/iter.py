@@ -45,14 +45,12 @@ class Iter(Generic[T]):
     VT = TypeVar('VT')
 
     @staticmethod
-    def from_dict(i: Dict[KT, VT]) -> Iter[Tuple[KT, VT]]:
+    def from_dict(i: Dict[KT, VT]) -> 'Iter[Tuple[KT, VT]]':
         return Iter(i.items().__iter__())
     
     @staticmethod
-    def into_dict(i: Iter[Tuple[KT, VT]]) -> Dict[KT, VT]:
+    def into_dict(i: 'Iter[Tuple[KT, VT]]') -> Dict[KT, VT]:
         return { p[0]: p[1] for p in i.iter() }
 
 
-
 del T
-
