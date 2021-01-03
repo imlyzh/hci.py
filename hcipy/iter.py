@@ -11,6 +11,10 @@ class Iter(Generic[T]):
     
     def __iter__(self) -> Iterable[T]:
         return self.iter()
+
+    R = TypeVar('R')
+    def __or__(self, callable: Callable[[T], R]) -> 'Iter[R]':
+        return Iter([callable(i) for i in self.v])
     
     def iter(self) -> Iterable[T]:
         return self.v.__iter__()
@@ -27,6 +31,9 @@ class Iter(Generic[T]):
     def reduce(self, callable: Callable[[T, T], T]) -> T:
         return reduce(callable, self.v)
 
+    def map(self, callable: Callable[[T], R]) -> 'Iter[R]':
+        return self | callable
+
     def for_each(self, callable: Callable[[T], None]) -> None:
         for i in self.v:
             callable(i)
@@ -36,10 +43,6 @@ class Iter(Generic[T]):
         for i in self.v:
             init = callable(init, i)
         return init
-
-    R = TypeVar('R')
-    def map(self, callable: Callable[[T], R]) -> 'Iter[R]':
-        return Iter([callable(i) for i in self.v])
     
     KT = TypeVar('KT')
     VT = TypeVar('VT')
