@@ -35,11 +35,13 @@ def f2i(v: float) -> int:
 def i2s(v: int) -> str:
     return str(v)
 
-# Three statement is equivalence
-r: str = Func(f2i) | i2s < 1.1
-r: str = Func(f2i) >> i2s < 1.1
-r: str = i2s << Func(f2i) < 1.1
+# Down statement is equivalence
+r: str = Func(f2i) | i2s % 1.1
+r: str = Func(f2i) >> i2s % 1.1
+r: str = i2s << Func(f2i) % 1.1
 # Func(f2i) : Func[float, int]
 # Func(f2i) >> i2s : Func[float, str]
 # i2s << Func(f2i) : Func[float, str]
+r: str = Func(f2i).pipe(i2s) % 1.1
+r: str = Func(f2i).pipe(i2s).apply(1.1)
 ```
