@@ -1,35 +1,30 @@
-from typing import TypeVar, Generic, Callable
+from typing import TypeVar, Generic, Callable, Tuple
 
-
-T1 = TypeVar('T1')
-T2 = TypeVar('T2')
-T3 = TypeVar('T3')
-T4 = TypeVar('T4')
-T5 = TypeVar('T5')
-T6 = TypeVar('T6')
-T7 = TypeVar('T7')
-T8 = TypeVar('T8')
-T9 = TypeVar('T9')
-T10 = TypeVar('T10')
-T11 = TypeVar('T11')
-T12 = TypeVar('T12')
-T13 = TypeVar('T13')
-T14 = TypeVar('T14')
-T15 = TypeVar('T15')
-T16 = TypeVar('T16')
+P = TypeVar('P')
 R = TypeVar('R')
 
-class Func0(Generic[R]):
-    callable: Callable[[], R]
+class Func(Generic[P, R]):
+    v: Tuple[Callable[[P], R]]
 
-class Func1(Generic[T1, R]):
-    callable: Callable[[T1], R]
+    def __init__(self, v: Callable[[P], R]):
+        self.v = (v,)
+    
+    def __call__(self, p: P) -> R:
+        return self.v[0](p)
+    
+    def __lt__(self, p: P) -> R:
+        return self(p)
+    
+    R1 = TypeVar('R1')
+    def __or__(self, callable: Callable[[R], R1]) -> 'Func[P, R1]':
+        return Func(lambda p: callable(self(p)))
+    
+    def __rshift__(self, callable: Callable[[R], R1]) -> 'Func[P, R1]':
+        return self | callable
+    
+    P1 = TypeVar('P1')
+    def __lshift__(self, callable: Callable[[P1], P]) -> 'Func[P1, R]':
+        return Func(lambda p: self(callable(p)))
 
-class Func2(Generic[T1, T2, R]):
-    callable: Callable[[T1, T2], R]
+del P, R
 
-class Func3(Generic[T1, T2, T3, R]):
-    callable: Callable[[T1, T2, T3], R]
-
-class Func4(Generic[T1, T2, T3, T4, R]):
-    callable: Callable[[T1, T2, T3, T4], R]
