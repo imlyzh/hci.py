@@ -17,6 +17,16 @@ Iter(range(1, 10))
     .reduce(lambda x,y:x+y)
 # Out: 108
 
+
+bool_array = Iter([true, false, true, true, false])
+
+bool_array.filter(identity).list()
+# Out: [true, true, true]
+
+bool_array.filter(not_).list()
+# Out: [false, false]
+
+
 Iter(range(1, 4))
     .for_each(print)
 '''

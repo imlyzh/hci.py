@@ -34,3 +34,8 @@ class Func(Generic[P, R]):
 
 del P, R
 
+T = TypeVar('T')
+def identity(id: T) -> T:
+    return id
+
+del T
