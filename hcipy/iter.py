@@ -20,7 +20,7 @@ class Iter(Generic[T]):
         return self.v.__iter__()
     
     def list(self) -> List[T]:
-        return List(self.iter())
+        return list(self.iter())
 
     def set(self) -> Set[T]:
         return set(self.iter())
@@ -37,6 +37,9 @@ class Iter(Generic[T]):
     def for_each(self, callable: Callable[[T], None]) -> None:
         for i in self.v:
             callable(i)
+    
+    def apply(self, callable: Callable[[Iterable[T]], Iterable[R]]) -> 'Iter[R]':
+        return Iter(callable(self.iter()))
 
     I = TypeVar('I')
     def fold(self, init: I, callable: Callable[[I, T], I]) -> I:
