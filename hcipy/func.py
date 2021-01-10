@@ -1,4 +1,5 @@
-from typing import TypeVar, Generic, Callable, Tuple
+from typing import TypeVar, Generic, Callable, Tuple, Iterable
+from .iter import Iter
 
 P = TypeVar('P')
 R = TypeVar('R')
@@ -18,6 +19,9 @@ class Func(Generic[P, R]):
     R1 = TypeVar('R1')
     def __or__(self, callable: Callable[[R], R1]) -> 'Func[P, R1]':
         return Func(lambda p: callable(self(p)))
+    
+    def __ror__(self, other: Iterable[P]) -> 'Iter[R]':
+        return Iter([self(i) for i in other])
     
     def __rshift__(self, callable: Callable[[R], R1]) -> 'Func[P, R1]':
         return self | callable
